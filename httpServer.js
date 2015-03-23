@@ -15,7 +15,7 @@ try {
     }
 
     //Function which get called everytime when server receives therequest from client.
-    var server = http.createServer ( function (req, res) {
+    var server = http.createServer ( function createserverHandler(req, res) {
         if (req.method !== 'GET') {
             res.end("Server closed: Request is other than GET request.");
             throw new Error(" Server closed: Request is other than GET request.");
@@ -25,7 +25,7 @@ try {
         } else {
             //Findout imagename from the query string parameter.
             var imageName = qs.parse( req.url.split('?')[1] ).image;//.toLowerCase();//Converte folder name to lower case.
-            fs.exists( "Images/" + imageName, function (exists) {
+            fs.exists( "Images/" + imageName, function isImageFound(exists) {
                 if ( !exists ) {  //shows error message when image not found.
                     res.writeHead(400, {"Content-Type": "text/html"});
                     res.end("<h1>Image not found: " + imageName + "</h1>");
@@ -38,7 +38,7 @@ try {
             });
         }
     });
-    server.listen(1337, "127.0.0.1", function(){
+    server.listen(1337, "127.0.0.1", function listenerResponse() {
         console.log( "Listening on- 127.0.0.1:1337" );
     });
 } catch (err) {
